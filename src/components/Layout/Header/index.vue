@@ -1,97 +1,125 @@
 <template>
-  <div class="wrap px-2">
-    <div class="title">南瓜、相册</div>
-    <router-link class="navItem" v-for="(item, index) in navList" :to="item.path" :key="index">
-      <span class="iconfont" :class="item.icon"></span>{{ item.title
-      }}<span class="icon"></span>
-    </router-link>
-    <slot name="extra"></slot>
-    <div class="logOut" @click="logOut">退出登录</div>
+  <div class="flex items-center h-full px-2">
+    <el-row class="w-full">
+      <el-col class="flex items-center" :span="6">
+        <div class="title">南瓜、相册</div>
+      </el-col>
+      <el-col class="flex items-center" :span="12">
+        <el-menu :router="true" :unique-opened="true" background-color="transparent" :default-active="defaultActive"
+          class="el-menu-demo" mode="horizontal">
+          <!-- 第一层菜单 -->
+          <template v-for="(item, index) in menuItems" :key="index">
+            <el-menu-item :disabled="item.disabled" class="el-menu-item" :route="item.route" v-if="!item.children"
+              :index="index + ''">
+              {{ item.title }}
+            </el-menu-item>
+            <el-sub-menu :disabled="item.disabled" class="el-menu-item" v-if="item.children && item.children.length > 1"
+              :index="index">
+              <!-- 出现二级菜单 -->
+              <template #title>
+                {{ item.title }}
+              </template>
+              <template v-for="(subItem, subIndex) in item.children" :key="subIndex">
+                <el-menu-item :disabled="subItem.disabled" class="el-menu-item" v-if="!subItem.children"
+                  :route="subItem.route" :index="index + '-' + subIndex" :key="childIndex">
+                  {{ subItem.title }}
+                </el-menu-item>
+                <!-- 第二级菜单可能有子的情况，三级菜单 -->
+                <el-sub-menu :disabled="subItem.disabled" class="el-menu-item"
+                  v-if="subItem.children && subItem.children.length > 1" :index="index + '-' + subIndex">
+                  <template #title>
+                    <span class="el-menu-item">{{ subItem.title }}</span>
+                  </template>
+                  <el-menu-item :disabled="trItem.disabled" class="el-menu-item" :route="trItem.route"
+                    v-for="(trItem, trIndex) in subItem.children" :index="index + '-' + subIndex + '-' + trIndex"
+                    :key="trIndex">
+                    {{ trItem.title }}
+                  </el-menu-item>
+                </el-sub-menu>
+              </template>
+
+            </el-sub-menu>
+          </template>
+        </el-menu></el-col>
+      <el-col class="flex items-center justify-end" :span='6'> <el-button type="primary"
+          @click="logOut">退出登录</el-button></el-col>
+    </el-row>
   </div>
 </template>
 
 <script setup>
-import { navList } from "./data";
+import { menuItems } from "./data";
 import { useUserStore } from "@/store/user";
 import { useRouter, useRoute } from "vue-router";
 import { message } from "ant-design-vue";
+import { ref, reactive } from 'vue';
 const router = useRouter();
 const userStore = useUserStore();
 const route = useRoute();
+let activeIndex = ref < String > ('1');//点击的menu
+// 退出登录
 const logOut = () => {
   userStore.logOut().then((res) => {
-
     router.push({
-      path: "/login",
+      route: "/login",
     });
     // window.location.reload();
   });
 };
+//选中事件
+const handleSelect = (e) => {
+  console.log(e)
+}
 </script>
 <style lang='less' scoped>
-@import url("@/assets/icon/iconfont.css");
-
-/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
-@font-face {
-  font-family: "Regular";
-  font-weight: 400;
-  src: url("@/assets/font/Alimama_DongFangDaKai_Regular.woff2") format("woff2"),
-    url("@/assets/font/Alimama_DongFangDaKai_Regular.woff") format("woff");
-  font-display: swap;
-}
-
 .iconfont {
   font-size: 1.5rem;
   margin-right: 2px;
 }
 
-.wrap {
+
+
+
+.title {
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
+  color: white;
+  border-right: solid 0.5px rgba(255, 255, 255, 0.2);
+}
+
+.title {
+  justify-self: start;
+  flex-grow: 1.4;
+  height: 100%;
+  font-size: 2.5rem;
+  color: aquamarine;
+  flex: 1;
+}
+
+.el-menu-demo {
   width: 100%;
-  height: 80px;
-  margin-bottom: 20px;
+  flex-grow: 1;
+  justify-content: space-around;
 
-  padding: 0 10%;
-  font-family: "Regular";
-  padding-right: 40%;
-  background-color: rgba(24, 28, 19, 0.6);
+}
 
-  .title,
-  .navItem {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    border-right: solid 0.5px rgba(255, 255, 255, 0.2);
+:deep(.el-sub-menu__title, .el-tooltip__trigger, .el-tooltip__trigger) {
+  font-size: 1.25rem;
+
+  &:hover {
+    background-color: transparent;
   }
+}
 
-  .title {
-    justify-self: start;
-    flex-grow: 1.4;
-    height: 100%;
-    font-size: 2.5rem;
-    color: aquamarine;
-  }
+.el-menu-item {
+  font-size: 1.25rem;
+}
 
-  .logOut {
-    position: absolute;
-    right: 20px;
-    cursor: pointer;
-  }
 
-  .navItem {
-    flex-grow: 1;
-    font-size: 1.2rem;
-    height: 100%;
+.logOut {
+  flex: 1;
+  cursor: pointer;
 
-    &:hover {
-      background-color: black;
-      color: white;
-      cursor: pointer;
-    }
-  }
 }
 </style>

@@ -5,16 +5,12 @@
         <p class="title">{{ item.title }}</p>
         <p class="tag">
           <span class="time">
-            <Icon
-              icon="bi:calendar-fill"
-              class="icon"
-              color="rgb(23,105,170)"
-            />{{ item.createTime.substring(0, 10) }}</span
-          >
+            <Icon icon="bi:calendar-fill" class="icon" color="rgb(23,105,170)" />{{ item.createTime.substring(0, 10) }}
+          </span>
           <span class="view">
             <Icon icon="carbon:view-filled" class="icon" color="orange" />{{
-              item.views
-            }}
+        item.views
+      }}
           </span>
           <span class="pen">
             <Icon class="icon" icon="mdi:pen" />字数≈{{ item.words }}
@@ -26,12 +22,7 @@
         <div class="detail">阅读全文</div>
         <hr />
         <div class="category">
-          <div
-            class="item"
-            :style="{ backgroundColor: tag.color }"
-            v-for="(tag, index) in item.tags"
-            :key="index"
-          >
+          <div class="item" :style="{ backgroundColor: tag.color }" v-for="(tag, index) in item.tags" :key="index">
             <div class="left" :style="{ backgroundColor: tag.color }">
               <div class="cicle"></div>
             </div>
@@ -153,16 +144,19 @@ const articles = ref([
   display: flex;
   padding-right: 5%;
   flex-wrap: nowrap;
+
   .main {
     flex: 1;
-    padding: 5%;
+
   }
+
   .aside {
     width: 200px;
     border: solid red 1px;
     margin-left: 20px;
     justify-content: space-betweens;
   }
+
   .article {
     display: flex;
     flex-wrap: wrap;
@@ -172,13 +166,16 @@ const articles = ref([
     border: solid 1px grey;
     margin-bottom: 60px;
     background-color: white;
+
     &:hover {
       box-shadow: 0 0 4px 2px rgba(87, 80, 80, 1);
     }
+
     .icon {
       font-size: 1.25rem;
       margin-right: 5px;
     }
+
     .title,
     .tag,
     .desc {
@@ -188,14 +185,17 @@ const articles = ref([
       margin-bottom: 10px;
       align-items: center;
     }
+
     .title {
       font-size: 2rem;
       font-weight: bold;
       margin-bottom: 20px;
     }
+
     .tag {
       padding: 0 20%;
       justify-content: space-around;
+
       .time,
       .view,
       .pen {
@@ -205,13 +205,16 @@ const articles = ref([
         vertical-align: middle;
       }
     }
+
     ::v-deep(.description) {
       border-bottom: 1px solid rgba(red, green, blue, alpha);
+
       img {
         width: 100%;
         object-fit: cover;
       }
     }
+
     .detail {
       width: 160px;
       height: 60px;
@@ -223,31 +226,33 @@ const articles = ref([
       cursor: pointer;
       margin-top: 20px;
 
-      background-image: linear-gradient(
-        to right,
-        blue 0%,
-        pink 25%,
-        green 50%,
-        purple 75%,
-        blue 100%
-      );
+      background-image: linear-gradient(to right,
+          blue 0%,
+          pink 25%,
+          green 50%,
+          purple 75%,
+          blue 100%);
       background-size: 200% 200%;
       background-position: 0 0;
+
       &:hover {
         animation: mybgc 2s ease-in normal infinite;
         color: blue;
         animation-direction: reverse;
       }
     }
+
     hr {
       width: 100%;
     }
+
     .category {
       width: 100%;
       padding: 20px;
       display: flex;
       flex-wrap: nowrap;
       justify-content: flex-start;
+
       .item {
         display: flex;
         align-items: center;
@@ -260,6 +265,7 @@ const articles = ref([
         animation: headShake;
         animation-duration: 5s;
         animation-iteration-count: infinite;
+
         span {
           display: inline-block;
           margin-right: 5%;
@@ -267,6 +273,7 @@ const articles = ref([
           width: 60%;
           overflow: hidden;
         }
+
         .left {
           width: 40px;
           height: 100%;
@@ -274,6 +281,7 @@ const articles = ref([
           justify-content: center;
           align-items: center;
           transform: translateX(-50%) rotate(40deg) scale(0.8);
+
           .cicle {
             width: 20%;
             height: 20%;
@@ -284,6 +292,7 @@ const articles = ref([
         }
       }
     }
+
     @keyframes mybgc {
       0% {
         background-position: 0% 0%;

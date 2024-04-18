@@ -25,7 +25,7 @@ const Router = createRouter({
                 {
                     path: 'photo',
                     name: 'photo',
-                    component: import('@/view/photo/index.vue')
+                    component:()=> import('@/view/photo/index.vue')
 
                 }, {
                     path: 'life',

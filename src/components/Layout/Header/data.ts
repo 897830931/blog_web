@@ -1,33 +1,76 @@
-export const navList = [
-    {
-        title: '首页',
-        icon: 'icon-shouye',
-        iconColor: '',
-        path: {
-            path: '/'
-        }
+export const menuItems = [
+  {
+    title: "首页",
+    route: {
+      path: "/home",
     },
-    {
-        title: '相册',
-        icon: 'icon-xiangce',
-        iconColor: '',
-        path: {
-            path: '/photo'
-        }
+    disabled: false,
+  },
+  {
+    title: "分类",
+    disabled: false,
+    children: [
+      {
+        title: "item one",
+        route: {
+          path: "/home",
+        },
+        disabled: false,
+      },
+      {
+        title: "item two",
+        route: {
+          path: "/home",
+        },
+        disabled: false,
+      },
+      {
+        title: "item three",
+        route: {
+          path: "/home",
+        },
+        disabled: false,
+      },
+      {
+        title: "item four",
+        children: [
+          {
+            title: "item one",
+            route: {
+              path: "/home",
+            },
+            disabled: false,
+          },
+          {
+            title: "item two",
+            route: {
+              path: "/home",
+            },
+            disabled: false,
+          },
+          {
+            title: "item three",
+            route: {
+              path: "/home",
+            },
+            disabled: true,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "日常",
+    route: {
+      path: "/life",
     },
-    {
-        title: '动态',
-        icon: 'icon-dongtai',
-        iconColor: '',
-        path: {
-            path: '/life'
-        }
+    disabled: false,
+  },
+  {
+    title: "笔记",
+    route: {
+      path: "/category",
     },
-    {
-        title: '分类',
-        icon: 'icon-fenlei',
-        iconColor: '',
-        path: '/category'
-    }
-
-]
+    disabled: true,
+  },
+];
