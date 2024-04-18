@@ -9,10 +9,14 @@ declare module 'vue' {
   export interface GlobalComponents {
     AButton: typeof import('ant-design-vue/es')['Button']
     ACheckbox: typeof import('ant-design-vue/es')['Checkbox']
+    ACollapsePanel: typeof import('ant-design-vue/es')['CollapsePanel']
     AForm: typeof import('ant-design-vue/es')['Form']
     AFormItem: typeof import('ant-design-vue/es')['FormItem']
     AInput: typeof import('ant-design-vue/es')['Input']
     AInputPassword: typeof import('ant-design-vue/es')['InputPassword']
+    Aside: typeof import('./src/components/Layout/Aside/index.vue')['default']
+    Directory: typeof import('./src/components/Layout/Directory/index.vue')['default']
+    Header: typeof import('./src/components/Layout/Header/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

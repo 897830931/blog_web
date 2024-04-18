@@ -7,3 +7,10 @@ export async function login(params: any) {
     );
     return res
 }
+export async function loginOut() {
+    const res = await defHttp.post(
+        { url: '/admin/user/logout', },
+
+    );
+    return res
+}

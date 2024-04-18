@@ -1,7 +1,7 @@
 import { Vaxios } from "./axios";
-import { AxiosTransform, CreateAxiosOptions } from './axiosTransform'
+import { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 const transform: AxiosTransform = {}
-
+import { storage } from '@/utils/storage/index';
 function is(val: unknown, type: string) {
     return toString.call(val) === `[object ${type}]`;
 }
@@ -18,6 +18,7 @@ function deepMerge<T = any>(src: any = {}, target: any = {}): T {
 
 
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
+
     return new Vaxios(
         deepMerge(
             {
@@ -29,7 +30,10 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
                 // 基础接口地址
                 // baseURL: globSetting.apiUrl,
 
-                headers: { 'Content-Type': 'application/json;charset=UTF-8 ' },
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8 ',
+
+                },
                 // 如果是form-data格式
                 // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
                 // 数据处理方式 拦截器
@@ -64,7 +68,11 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         ),
     );
 }
+
 export const defHttp = createAxios({
     baseURL: '/api',
-    headers: { APPID: new Date().getTime() },
+    headers: {
+        APPID: new Date().getTime(),
+        Authorization: storage.get("TOKEN"),
+    },
 });

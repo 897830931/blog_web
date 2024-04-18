@@ -1,12 +1,15 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
-import Router from './router/index';
-import 'ant-design-vue/dist/antd.css';
+import router from './router/index';
 import "tailwindcss/tailwind.css"
+import 'ant-design-vue/dist/antd.css';
+import 'animate.css';
+import elementPlus from 'element-plus';
+import 'element-plus/dist/index.css'
 import { createPinia } from 'pinia';
 const pinia = createPinia();
 createApp(App)
     .use(pinia)
-    .use(Router)
+    .use(router)
+    .use(elementPlus)
     .mount('#app')

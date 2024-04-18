@@ -30,6 +30,15 @@ export default defineConfig(({ command, mode }) => {
         plugins: [
           tailwindcss, autoprefixer
         ]
+      },
+      preprocessorOptions: {
+        scss: {
+          // 一些配置项
+        },
+        less: {
+          // 一些配置项
+          math: "always"
+        }
       }
     },
     plugins: [

@@ -4,13 +4,24 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>南瓜相册</title>
+  <meta name="description" content="南瓜的个人博客" />
+  <meta name="keywords" content="博客" />
+  <title>南瓜的小窝</title>
 </head>
 
 <body>
-  <div id="app"></div>
+  <div id="app" class="h-full w-full"></div>
   <script type="module" src="/src/main.ts"></script>
 </body>
+<style>
+  @import url('./src/assets/css/reset.css');
+
+  body {
+    background-color: rgb(239, 239, 239);
+    z-index: -2;
+  }
+</style>
 
 </html>

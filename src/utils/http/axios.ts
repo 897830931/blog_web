@@ -31,6 +31,8 @@ export class Vaxios {
             return;
         }
         this.createAxios(config);
+
+
     }
     /**
      * upload
