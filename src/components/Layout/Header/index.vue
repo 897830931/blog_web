@@ -5,7 +5,7 @@
         <div class="title">南瓜、相册</div>
       </el-col>
       <el-col class="flex items-center" :span="12">
-        <el-menu :router="true" :unique-opened="true" background-color="transparent" :default-active="defaultActive"
+        <el-menu :router="true" :unique-opened="true" background-color="transparent" :default-active="activeIndex"
           class="el-menu-demo" mode="horizontal">
           <!-- 第一层菜单 -->
           <template v-for="(item, index) in menuItems" :key="index">
@@ -14,14 +14,14 @@
               {{ item.title }}
             </el-menu-item>
             <el-sub-menu :disabled="item.disabled" class="el-menu-item" v-if="item.children && item.children.length > 1"
-              :index="index">
+              :index="index + ''">
               <!-- 出现二级菜单 -->
               <template #title>
                 {{ item.title }}
               </template>
               <template v-for="(subItem, subIndex) in item.children" :key="subIndex">
                 <el-menu-item :disabled="subItem.disabled" class="el-menu-item" v-if="!subItem.children"
-                  :route="subItem.route" :index="index + '-' + subIndex" :key="childIndex">
+                  :route="subItem.route" :index="index + '-' + subIndex" :key="subIndex">
                   {{ subItem.title }}
                 </el-menu-item>
                 <!-- 第二级菜单可能有子的情况，三级菜单 -->
@@ -47,21 +47,27 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { menuItems } from "./data";
 import { useUserStore } from "@/store/user";
 import { useRouter, useRoute } from "vue-router";
 import { message } from "ant-design-vue";
-import { ref, reactive } from 'vue';
+import { ref, reactive, nextTick } from 'vue';
 const router = useRouter();
 const userStore = useUserStore();
 const route = useRoute();
-let activeIndex = ref < String > ('1');//点击的menu
+let activeIndex = ref<String>('1');//点击的menu
 // 退出登录
 const logOut = () => {
-  userStore.logOut().then((res) => {
+  userStore.logOut().then(async (res) => {
+    message.info({
+      content: '退出登录'
+    })
+    await nextTick();
+    console.log(router, 'router')
     router.push({
-      route: "/login",
+      path: "/login",
+      name: 'login'
     });
     // window.location.reload();
   });
@@ -76,9 +82,6 @@ const handleSelect = (e) => {
   font-size: 1.5rem;
   margin-right: 2px;
 }
-
-
-
 
 .title {
   display: flex;
@@ -100,7 +103,7 @@ const handleSelect = (e) => {
 .el-menu-demo {
   width: 100%;
   flex-grow: 1;
-  justify-content: space-around;
+  justify-content: flex-start;
 
 }
 
@@ -109,7 +112,16 @@ const handleSelect = (e) => {
 
   &:hover {
     background-color: transparent;
+    border-bottom: 0;
   }
+}
+
+:deep(.el-menu--horizontal>.el-sub-menu.is-active .el-sub-menu__title) {
+  border: 0;
+}
+
+:deep(.is-avtive) {
+  border: 0;
 }
 
 .el-menu-item {

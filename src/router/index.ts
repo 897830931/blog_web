@@ -1,50 +1,48 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
-import { useUserStore } from '@/store/user';
+import {
+  createRouter,
+  createWebHashHistory,
+  createWebHistory,
+} from "vue-router";
+import { useUserStore } from "@/store/user";
 
 const Router = createRouter({
-    history: createWebHistory(),
-    routes: [
+  history: createWebHistory(),
+  routes: [
+    {
+      path: "/",
+      name: "index",
+      component: () => import("@/view/index.vue"),
+      redirect: "/home",
+      children: [
         {
-            path: '/login',
-            name: 'login',
-            component: () => import('@/view/login/login.vue')
-        },
-        {
-            path: '/',
-            name: 'index',
-            component: () => import('@/view/index.vue'),
-            redirect: '/home',
-            children: [
-                {
-                    path: '/home',
-                    name: 'home',
-                    component: () => import('@/view/home/index.vue')
-
-                },
-
-                {
-                    path: 'photo',
-                    name: 'photo',
-                    component:()=> import('@/view/photo/index.vue')
-
-                }, {
-                    path: 'life',
-                    name: 'life',
-                    component: () => import('@/view/life/index.vue')
-
-                },
-                {
-                    path: 'category',
-                    name: 'category',
-                    component: () => import('@/view/category/index.vue')
-
-                },
-
-            ]
-
+          path: "/home",
+          name: "home",
+          component: () => import("@/view/home/index.vue"),
         },
 
-    ]
+        {
+          path: "photo",
+          name: "photo",
+          component: () => import("@/view/photo/index.vue"),
+        },
+        {
+          path: "life",
+          name: "life",
+          component: () => import("@/view/life/index.vue"),
+        },
+        {
+          path: "category",
+          name: "category",
+          component: () => import("@/view/category/index.vue"),
+        },
+      ],
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("@/view/login/login.vue"),
+    },
+  ],
 });
 // let originPush = Router.push;
 // let originReplace = Router.replace;
@@ -81,28 +79,27 @@ const Router = createRouter({
 // };
 
 // 路由前置守卫
-Router.beforeEach((to, from, next) => {
-    const userStore = useUserStore();
-
-    if (to.name !== 'login' && !userStore.getToken) {
-        next({ path: 'login', name: 'login' })
-        return
-    }
-    if (to.name == 'login' && userStore.getToken) {
-        next({ name: 'home' });
-        return
-    }
-    // if (to.path === from.path) {
-    //     // 处理重复导航
-    //     next(false); // 阻止路由更新
-    //     return
-    // } else {
-    //     // 继续正常的路由更新
-    //     next();
-    //     return
-    // }
-    next()
-})
+Router.beforeEach(async (to, from, next) => {
+  const userStore = await useUserStore();
+  if (to.name !== "login" && !userStore.getToken) {
+    next({ path: "login", name: "login" });
+    return;
+  }
+  if (to.name == "login" && userStore.getToken && userStore.token) {
+    next({ name: "home" });
+    return;
+  }
+  // if (to.path === from.path) {
+  //     // 处理重复导航
+  //     next(false); // 阻止路由更新
+  //     return
+  // } else {
+  //     // 继续正常的路由更新
+  //     next();
+  //     return
+  // }
+  next();
+});
 // 路由报错
 // router.onError()
 

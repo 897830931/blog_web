@@ -9,9 +9,11 @@
           <Aside> </Aside>
         </el-aside>
         <el-main class="p-4">
-          <transition name="fade">
-            <router-view class="content"></router-view>
-          </transition>
+          <router-view v-slot="{ Component }">
+            <transition>
+              <component :is="Component" />
+            </transition>
+          </router-view>
         </el-main>
       </el-container>
     </el-container>
